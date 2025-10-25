@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Synchronous and Asynchronous Communication</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      line-height: 1.6;
+    }
+    .output {
+      margin-top: 20px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      background-color: #f9f9f9;
+    }
+  </style>
+</head>
+<body>
+  <h1>Synchronous and Asynchronous Communication</h1>
+  <p>
+    Click the buttons below to see how synchronous and asynchronous communication works.
+  </p>
+
+  <button onclick="synchronousBooking()">Synchronous Booking</button>
+  <button onclick="asynchronousBookingWithCallback()">Asynchronous Booking with Callback</button>
+  <button onclick="asynchronousBookingWithPromise()">Asynchronous Booking with Promise</button>
+
+  <div class="output" id="output"></div>
+
+  <script>
+    // Output element to display results
+    const output = document.getElementById("output");
+
+    // Clear output before running a function
+    function clearOutput() {
+      output.innerHTML = "";
+    }
+
+    // Synchronous Booking Example
+    function synchronousBooking() {
+      clearOutput();
+      output.innerHTML += "<p>Starting synchronous booking...</p>";
+      output.innerHTML += "<p>Processing the ticket...</p>";
+      output.innerHTML += "<p>Ticket booked successfully!</p>";
+      output.innerHTML += "<p>You can now proceed with your plans.</p>";
+    }
+
+    // Asynchronous Booking with Callback Example
+    function asynchronousBookingWithCallback() {
+      clearOutput();
+      output.innerHTML += "<p>Starting asynchronous booking...</p>";
+      output.innerHTML += "<p>Processing the ticket...</p>";
+
+      // Simulating a delay with setTimeout
+      setTimeout(() => {
+        output.innerHTML += "<p>Ticket booked successfully!</p>";
+        notifyUser();
+      }, 2000);
+    }
+
+    // Callback function to notify user
+    function notifyUser() {
+      output.innerHTML += "<p>You can now proceed with your plans.</p>";
+    }
+
+    // Asynchronous Booking with Promise Example
+    function bookTicket() {
+      return new Promise((resolve, reject) => {
+        output.innerHTML += "<p>Starting asynchronous booking...</p>";
+        output.innerHTML += "<p>Processing the ticket...</p>";
+
+        // Simulating a delay with setTimeout
+        setTimeout(() => {
+          const success = true; // Simulate success or failure
+
+          if (success) {
+            resolve("Ticket booked successfully!");
+          } else {
+            reject("Failed to book the ticket.");
+          }
+        }, 2000);
+      });
+    }
+
+    function asynchronousBookingWithPromise() {
+      clearOutput();
+
+      bookTicket()
+        .then((message) => {
+          output.innerHTML += '<p>${message}</p>';
+          output.innerHTML += "<p>You can now proceed with your plans.</p>";
+        })
+        .catch((error) => {
+          output.innerHTML += '<p>${error}</p>';
+        });
+    }
+  </script>
+</body>
+</html>
